@@ -1,1 +1,42 @@
-[{"id":1,"time":"2022-08-16","title":"网站更新","color":"#a333c8","content":"添加时间线"},{"id":2,"time":"2022-08-17","title":"网站更新","color":"#a5673f","content":"网站部署到服务器"},{"id":3,"time":"2022-08-17","title":"文章更新","color":"#F74D77","content":"nginx刷新页面出现404解决方案"},{"id":4,"time":"2022-08-18","title":"网站更新","color":"#7be4f7","content":"增加了文章编辑功能，重写了'更多'页面"},{"id":5,"time":"2022-08-20","title":"文章更新","color":"#FFDA45","content":"asf"}]
+[
+    {
+        "id": 1,
+        "time": "2022-08-16",
+        "title": "网站更新",
+        "color": "#a333c8",
+        "position": "left",
+        "content": "添加时间线"
+    },
+    {
+        "id": 2,
+        "time": "2022-08-17",
+        "title": "网站更新",
+        "color": "#a5673f",
+        "position": "left",
+        "content": "网站部署到服务器"
+    },
+    {
+        "id": 3,
+        "time": "2022-08-17",
+        "title": "文章更新",
+        "color": "#F74D77",
+        "position": "right",
+        "content": "nginx刷新页面出现404解决方案"
+    },
+    {
+        "id": 4,
+        "time": "2022-08-18",
+        "title": "网站更新",
+        "color": "#7be4f7",
+        "position": "left",
+        "content": "增加了文章编辑功能，重写了'更多'页面"
+    },
+    {
+        "id": 5,
+        "time": "2022-08-20",
+        "title": "文章更新",
+        "color": "#FFDA45",
+        "position": "right",
+        "content": "asf"
+    }
+]
