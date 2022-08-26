@@ -14,11 +14,9 @@ type Article = {
     coverName?: string
     mdImgName?: string
     time: string
-    lastUpdataTime: string
     oneSentence: string
     content: string
 }
-
 
 apiRouter.get('/delarticle', (req, res) => {
     const delId = Number(req.query.id)

@@ -94,6 +94,7 @@ apiRouter.post('/uploadarticle', (req, res) => {
         time: string
         title: string
         color?: string
+        position: string
         content: string
     }
 
@@ -113,6 +114,7 @@ apiRouter.post('/uploadarticle', (req, res) => {
         time: achiveTime,
         title: '文章更新',
         color: colors[colorNum],
+        position: 'right',
         content: newArticle.title
     }
     achiveJson.push(updataAchive)

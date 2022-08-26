@@ -11,13 +11,11 @@ type Article = {
     tag: Array<string>
     cover?: string
     coverName?: string
-    mdImgName?: string
+    mdImgName?: Array<string>
     time: string
-    lastUpdataTime: string
     oneSentence: string
     content: string
 }
-
 
 apiRouter.get('/getarticle', (req, res) => {
     const articleJson = fs.readFileSync(path.join(__dirname, './data/articleList.json'), 'utf-8')
