@@ -16,6 +16,8 @@ import delArticle from './delArticle'
 import getArchive from './getArchive'
 //修改文章
 import articleEditor from './articleEditor'
+//请求封面
+import getCover from './getCover'
 
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
@@ -28,6 +30,7 @@ app.use('/api', uploadArticleCover)
 app.use('/api', delArticle)
 app.use('/api', getArchive)
 app.use('/api', articleEditor)
+app.use('/api', getCover)
 
 
 app.listen(3030, () => {
