@@ -1,11 +1,10 @@
 import express from 'express'
-import { readdirSync, readFileSync } from 'fs'
+import { readdirSync } from 'fs'
 
 const apiRouter = express.Router()
 
 apiRouter.get('/getcover', (req, res) => {
     const coverList = readdirSync('./image/indexCover')
-    // console.log(coverList);
     //生成一个随机数,随机选一个做封面
     const num = Math.floor(Math.random() * coverList.length)
     const coverName = coverList[num]
