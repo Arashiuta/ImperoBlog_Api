@@ -47,6 +47,35 @@ class userControl {
             })
         }
     }
+
+    //登录============================================================================================================
+    async login(req: any, res: any) {
+        const loginInfo = req.body
+        const ifHaveAccount = await Users.find({ account: loginInfo.username })
+        const userInfo = ifHaveAccount[0]
+        if (ifHaveAccount.length !== 0) {
+            //用户存在
+            if (userInfo.password === loginInfo.password) {
+                res.send({
+                    status: 0,  //登录成功
+                    data: userInfo  //把用户信息返回去
+                })
+            }
+        } else {
+            res.send({
+                status: 2   //用户名不存在
+            })
+        }
+    }
+
+    //请求用户的信息============================================================================================================
+    async accountInfo(req: any, res: any) {
+        console.log(req.query);
+        res.send({
+            status: 0,
+        })
+
+    }
 }
 
 export default new userControl()

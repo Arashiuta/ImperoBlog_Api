@@ -2,7 +2,6 @@ import express from 'express'
 const app = express()
 import cors from "cors";
 
-//注册接口
 //请求文章列表
 import getArticles from './router/getArticles'
 //请求指定id的文章
@@ -23,11 +22,15 @@ import getCover from './router/getCover'
 import userRigister from './router/userRegister'
 //更新昵称
 import userUpdataNickname from "./router/userUpdataNickname";
+//登录接口
+import userLogin from "./router/userLogin";
+//用户信息
+import userAccountInfo from "./router/userAccountInfo";
 
 
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
-//托管静态资源 不然无法请求出东西
+//托管静态资源
 app.use(express.static('./image'))
 app.use('/api', getArticles)
 app.use('/api', getTags)
@@ -39,6 +42,8 @@ app.use('/api', getCover)
 app.use('/api', getIdArticle)
 app.use('/api', userRigister)
 app.use('/api', userUpdataNickname)
+app.use('/api', userLogin)
+app.use('/api', userAccountInfo)
 
 
 app.listen(3030, () => {
