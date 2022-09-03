@@ -70,11 +70,12 @@ class userControl {
 
     //请求用户的信息============================================================================================================
     async accountInfo(req: any, res: any) {
-        console.log(req.query);
+        const account = req.query.account
+        const info = await Users.find({ account: account })
         res.send({
             status: 0,
+            data: info
         })
-
     }
 }
 

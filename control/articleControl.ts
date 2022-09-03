@@ -29,6 +29,10 @@ class articlesControl {
     //修改文章===============================================================================================
     async editorArticle(req: any, res: any) {
         //获取要修改的文章id
+        const editroId = req.body.id
+        const editroInfo = req.body.data
+        await Articles.updateOne({ id: editroId }, { $set: { oneSentence: editroInfo.oneSentence, content: editroInfo.mdContent } })
+
         res.send({
             status: 0
         })

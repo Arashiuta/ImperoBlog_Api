@@ -4,6 +4,6 @@ import articleControl from "../control/articleControl";
 const apiRouter = express.Router()
 
 
-apiRouter.get('/articleeditor', articleControl.editorArticle)
+apiRouter.post('/articleeditor', articleControl.editorArticle)
 
 export default apiRouter
