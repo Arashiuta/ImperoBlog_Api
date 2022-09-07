@@ -18,7 +18,7 @@ import delArticle from './router/delArticle'
 import articleEditor from './router/articleEditor'
 //请求封面
 import getCover from './router/getCover'
-//注册接口
+//注册账号
 import userRigister from './router/userRegister'
 //更新昵称
 import userUpdataNickname from "./router/userUpdataNickname";
@@ -26,7 +26,16 @@ import userUpdataNickname from "./router/userUpdataNickname";
 import userLogin from "./router/userLogin";
 //用户信息
 import userAccountInfo from "./router/userAccountInfo";
-
+//上传封面step1
+import userUploadHeadImg from './router/userUploadHeadImg'
+//上传封面step2
+import userUploadHeadJson from './router/userUploadHeadJson'
+//请求默认头像
+import getDefaultHead from "./router/getDefaultHead";
+//上传留言
+import uploadMessage from "./router/uploadMessage";
+//请求留言列表
+import getMessageList from './router/getMessageList'
 
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
@@ -44,6 +53,11 @@ app.use('/api', userRigister)
 app.use('/api', userUpdataNickname)
 app.use('/api', userLogin)
 app.use('/api', userAccountInfo)
+app.use('/api', userUploadHeadImg)
+app.use('/api', userUploadHeadJson)
+app.use('/api', getDefaultHead)
+app.use('/api', uploadMessage)
+app.use('/api', getMessageList)
 
 
 app.listen(3030, () => {

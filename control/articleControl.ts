@@ -31,7 +31,10 @@ class articlesControl {
         //获取要修改的文章id
         const editroId = req.body.id
         const editroInfo = req.body.data
-        await Articles.updateOne({ id: editroId }, { $set: { oneSentence: editroInfo.oneSentence, content: editroInfo.mdContent } })
+        //生成一个写入时间
+        moment.locale()
+        const uploadTime = moment().format('YYYY-MM-DD hh:mm:ss')
+        await Articles.updateOne({ id: editroId }, { $set: { oneSentence: editroInfo.oneSentence, content: editroInfo.mdContent, lastUpdataTime: uploadTime } })
 
         res.send({
             status: 0
@@ -90,7 +93,7 @@ class articlesControl {
                 path: '/articleImage/mdImg/' + nextId + '/' + filesInfo.file.newFilename,
                 name: filesInfo.file.newFilename
             }
-            writeFileSync('../data/tempMdImg.json', JSON.stringify(filePath))
+            writeFileSync(path.join(__dirname, '../data/tempMdImg.json'), JSON.stringify(filePath))
             res.send({
                 status: 0,
                 url: filePath.path
@@ -118,6 +121,9 @@ class articlesControl {
         if (tempCoverPath !== null) {
             coverPath = tempCoverPath
         }
+
+        console.log(tempCoverPath);
+
 
         //拿到md文档上传的图片的名字
         const mdImg = JSON.parse(readFileSync(path.join(__dirname, '../data/tempMdImg.json'), 'utf-8'))

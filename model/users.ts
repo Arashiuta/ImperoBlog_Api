@@ -21,6 +21,10 @@ const Users = db.model('users', {
         type: String,
         require: false
     },
+    headImgName: {
+        type: String,
+        required: false
+    },
     ifroot: {
         type: Boolean,
         require: true

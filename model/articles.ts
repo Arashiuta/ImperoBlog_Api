@@ -11,6 +11,9 @@ const Articles = db.model('articles', {
         type: String,
         required: false,
         default: 'noName',
+    }, head: {
+        type: String,
+        required: false
     }, tag: {
         type: Array<string>,
         required: true
