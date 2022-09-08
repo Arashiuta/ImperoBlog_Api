@@ -25,7 +25,7 @@ const Users = db.model('users', {
         type: String,
         required: false
     },
-    ifroot: {
+    root: {
         type: Boolean,
         require: true
     }

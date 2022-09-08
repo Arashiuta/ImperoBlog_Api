@@ -36,6 +36,10 @@ import getDefaultHead from "./router/getDefaultHead";
 import uploadMessage from "./router/uploadMessage";
 //请求留言列表
 import getMessageList from './router/getMessageList'
+//删除留言
+import delMessage from './router/delMessage'
+//请求对应id的留言
+import getIdMessage from './router/getIdMessage'
 
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
@@ -58,6 +62,8 @@ app.use('/api', userUploadHeadJson)
 app.use('/api', getDefaultHead)
 app.use('/api', uploadMessage)
 app.use('/api', getMessageList)
+app.use('/api', delMessage)
+app.use('/api', getIdMessage)
 
 
 app.listen(3030, () => {

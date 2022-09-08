@@ -33,6 +33,25 @@ class messageControl {
             data: list
         })
     }
+
+    //删除留言==================================================================================================
+    async delMessage(req: any, res: any) {
+        const delId = req.query.id
+        await Messages.deleteOne({ id: delId })
+        res.send({
+            status: 0
+        })
+    }
+
+    //请求对应id的留言的信息==============================================================================================
+    async getIdMessage(req: any, res: any) {
+        const delId = req.query.id
+        const idMessage = await Messages.find({ id: delId })
+        res.send({
+            status: 0,
+            data: idMessage
+        })
+    }
 }
 
 export default new messageControl()

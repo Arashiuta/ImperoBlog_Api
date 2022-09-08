@@ -24,7 +24,7 @@ class userControl {
                 password: registerInfo.password,
                 nickName: registerInfo.username,
                 headImg: '/headimage/defaultHead/defaulthead.PNG',
-                ifroot: false
+                root: false
             }
 
             await Users.create(newUser)
