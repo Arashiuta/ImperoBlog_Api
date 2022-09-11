@@ -1,6 +1,17 @@
 import express from 'express'
-const app = express()
+import https from 'https'
+import http from 'http'
 import cors from "cors";
+import fs from "fs";
+import path from "path";
+
+const app = express()
+const sslOptions = {
+    key: fs.readFileSync(path.join(__dirname, './ssl/8291855_www.ibukisk.top.key'), 'utf-8'),
+    cert: fs.readFileSync(path.join(__dirname, './ssl/8291855_www.ibukisk.top.pem'), 'utf-8')
+}
+const httpSever = http.createServer(app)
+const httpsSever = https.createServer(sslOptions, app)
 
 //请求文章列表
 import getArticles from './router/getArticles'
@@ -66,6 +77,11 @@ app.use('/api', delMessage)
 app.use('/api', getIdMessage)
 
 
-app.listen(3030, () => {
-    console.log('success');
+httpSever.listen(3030, () => {
+    console.log('http success');
+
+})
+
+httpsSever.listen(3031, () => {
+    console.log('https success');
 })

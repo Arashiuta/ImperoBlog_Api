@@ -58,12 +58,10 @@ class articlesControl {
                 name: filesInfo.file.newFilename
             }
             writeFileSync(path.join(__dirname, '../data/tempArticleCoverDir.json'), JSON.stringify(filePath))
-
+            res.send({
+                status: 0
+            })
         })
-        res.send({
-            status: 0
-        })
-
     }
 
     //上传md文档的图片===============================================================================================

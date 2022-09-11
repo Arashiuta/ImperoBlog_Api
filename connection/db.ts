@@ -10,8 +10,8 @@ const dbArticle: any = mongoose.createConnection(
 
         }
         console.log('数据库链接成功');
-
     }
 )
+
 
 export default dbArticle
