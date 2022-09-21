@@ -203,6 +203,48 @@ class articlesControl {
         })
 
     }
+
+
+    //给文章点赞
+    async praise(req: any, res: any) {
+        const praiseUserAccount = req.query.account //获取点赞人的账号
+        const praiseArticleId = req.query.articleId //获取被点赞的文章id
+        //把点赞人的账号放在文章的praise键里面，用数组存放。如果不存在就存进去，如果存在就删除掉
+        const article = await Articles.find({ id: praiseArticleId })  //拿到要点赞的文章
+        const ifPraise = article[0].parise.indexOf(praiseUserAccount)  //检查是否已经点过赞了
+        if (ifPraise !== -1) {
+            //点过赞了就删除
+            await Articles.updateOne({ id: praiseArticleId }, { $pull: { parise: praiseUserAccount } })
+            res.send({
+                status: 1,
+            })
+        } else {
+            //没点赞就添加
+            await Articles.updateOne({ id: praiseArticleId }, { $push: { parise: praiseUserAccount } })
+            res.send({
+                status: 0,
+            })
+        }
+    }
+
+    //查询是否已经点赞了
+    async ifPraise(req: any, res: any) {
+        const praiseUserAccount = req.query.account //获取要查询的人的账号
+        const praiseArticleId = req.query.articleId //获取要查询的文章id
+        const article = await Articles.find({ id: praiseArticleId })
+        const ifHave = article[0].parise.indexOf(praiseUserAccount)
+        if (ifHave !== -1) {
+            //已经点过赞了
+            res.send({
+                status: 1
+            })
+        } else {
+            //没点过赞
+            res.send({
+                status: 0
+            })
+        }
+    }
 }
 
 export default new articlesControl

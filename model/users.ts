@@ -20,6 +20,12 @@ const Users = db.model('users', {
     headImg: {
         type: String,
         require: false
+    }, personalCover: {
+        type: String,
+        require: false
+    }, createDate: {
+        type: String,
+        require: true
     },
     headImgName: {
         type: String,

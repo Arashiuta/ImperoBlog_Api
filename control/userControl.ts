@@ -2,6 +2,7 @@ import Users from "../model/users";
 import formidable from 'formidable';
 import fs, { readdirSync, readFileSync, unlinkSync, writeFileSync } from "fs";
 import path from 'path'
+import moment from "moment";
 
 
 class userControl {
@@ -18,16 +19,21 @@ class userControl {
         } else {
             const lastUser = await Users.find().sort({ id: -1 })
             const nextId = lastUser[0].id + 1
+            moment.locale()
+            const createDate = moment().format('YYYY-MM-DD')  //生成一个申请账号的日期
             const newUser = {
                 id: nextId,
                 account: registerInfo.username,
                 password: registerInfo.password,
                 nickName: registerInfo.username,
                 headImg: '/headimage/defaultHead/defaulthead.PNG',
+                personalCover: '/personalImg/default/P)3T9@S7VH]V`QRNX[G`YRD.webp',
+                createDate: createDate,
                 root: false
             }
 
             await Users.create(newUser)
+
 
             res.send({
                 status: 0

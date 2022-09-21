@@ -51,6 +51,10 @@ import getMessageList from './router/getMessageList'
 import delMessage from './router/delMessage'
 //请求对应id的留言
 import getIdMessage from './router/getIdMessage'
+//文章点赞
+import pariseArticle from './router/pariseArticle'
+//查询是否已经点过赞
+import ifParise from "./router/ifParise";
 
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
@@ -75,6 +79,8 @@ app.use('/api', uploadMessage)
 app.use('/api', getMessageList)
 app.use('/api', delMessage)
 app.use('/api', getIdMessage)
+app.use('/api', pariseArticle)
+app.use('/api', ifParise)
 
 
 httpSever.listen(3030, () => {

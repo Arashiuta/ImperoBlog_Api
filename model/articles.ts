@@ -11,12 +11,18 @@ const Articles = db.model('articles', {
         type: String,
         required: false,
         default: 'noName',
-    }, head: {
+    }, head: {    //不知道是什么，不敢删除
         type: String,
         required: false
-    }, tag: {
+    }, tag: {    //标签
         type: Array<string>,
         required: true
+    }, parise: {   //点赞列表
+        type: Array<string>,
+        required: false
+    }, collections: {   //点赞列表
+        type: Array<string>,
+        required: false
     }, cover: {
         type: String,
         required: false
