@@ -19,10 +19,10 @@ const Articles = db.model('articles', {
         required: true
     }, parise: {   //点赞列表
         type: Array<string>,
-        required: false
-    }, collections: {   //点赞列表
+        required: true
+    }, collections: {   //收藏列表
         type: Array<string>,
-        required: false
+        required: true
     }, cover: {
         type: String,
         required: false

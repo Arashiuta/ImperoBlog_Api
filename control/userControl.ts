@@ -82,6 +82,13 @@ class userControl {
     async accountInfo(req: any, res: any) {
         const account = req.query.account
         const info = await Users.find({ account: account })
+
+
+        // const list = await Users.find()
+        // list.map(async (item: any) => {
+        //     await Users.updateOne({ id: item.id }, { $set: { pariseArticles: [], collectionArticles: [] } })
+        // })
+
         res.send({
             status: 0,
             data: info

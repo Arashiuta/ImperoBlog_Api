@@ -34,6 +34,15 @@ const Users = db.model('users', {
     root: {
         type: Boolean,
         require: true
+    }, pariseArticles: {   //点赞的文章
+        type: Array<string>,
+        require: true
+    }, collectionArticles: {  //收藏的文章
+        type: Array<string>,
+        require: true
+    }, mypush: {  //我的发布
+        type: Array<string>,
+        require: true
     }
 })
 

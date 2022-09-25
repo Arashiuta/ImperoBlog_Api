@@ -1,4 +1,5 @@
 import Articles from "../model/articles";
+import Users from '../model/users'
 import Tags from '../model/tags'
 import moment from "moment";
 import fs, { readFileSync, writeFileSync } from "fs";
@@ -10,6 +11,12 @@ class articlesControl {
     //获取文章列表===============================================================================================
     async getAllArticles(req: any, res: any) {
         const all = await Articles.find()
+
+        // const list = await Articles.find()
+        // list.map(async (item: any) => {
+        //     await Users.updateOne({ id: item.id }, { $set: { parise: [], collections: [] } })
+        // })
+
         res.send({
             status: 0,
             data: all
@@ -167,7 +174,7 @@ class articlesControl {
     }
 
 
-    //删除文章
+    //删除文章=======================================================================================================
     async delArticle(req: any, res: any) {
         //获取要删除的文章的id
         const delId = req.query.id
@@ -205,29 +212,31 @@ class articlesControl {
     }
 
 
-    //给文章点赞
+    //给文章点赞========================================================================================================================
     async praise(req: any, res: any) {
         const praiseUserAccount = req.query.account //获取点赞人的账号
-        const praiseArticleId = req.query.articleId //获取被点赞的文章id
+        const praiseArticleId = req.query.articleId //获取被点赞的文章id <string>
         //把点赞人的账号放在文章的praise键里面，用数组存放。如果不存在就存进去，如果存在就删除掉
         const article = await Articles.find({ id: praiseArticleId })  //拿到要点赞的文章
         const ifPraise = article[0].parise.indexOf(praiseUserAccount)  //检查是否已经点过赞了
         if (ifPraise !== -1) {
             //点过赞了就删除
-            await Articles.updateOne({ id: praiseArticleId }, { $pull: { parise: praiseUserAccount } })
+            await Articles.updateOne({ id: praiseArticleId }, { $pull: { parise: praiseUserAccount } })  //删除文章数据内的点赞人数组里面的用户
+            await Users.updateOne({ account: praiseUserAccount }, { $pull: { pariseArticles: praiseArticleId } })  //删除用户账号数据里面的点赞文章列表对应的文章id
             res.send({
                 status: 1,
             })
         } else {
             //没点赞就添加
-            await Articles.updateOne({ id: praiseArticleId }, { $push: { parise: praiseUserAccount } })
+            await Articles.updateOne({ id: praiseArticleId }, { $push: { parise: praiseUserAccount } })  //添加文章数据内的点赞人数组里面的用户
+            await Users.updateOne({ account: praiseUserAccount }, { $push: { pariseArticles: praiseArticleId } })  //添加用户账号数据里面的点赞文章列表对应的文章id
             res.send({
                 status: 0,
             })
         }
     }
 
-    //查询是否已经点赞了
+    //查询是否已经点赞了===================================================================================
     async ifPraise(req: any, res: any) {
         const praiseUserAccount = req.query.account //获取要查询的人的账号
         const praiseArticleId = req.query.articleId //获取要查询的文章id
@@ -244,6 +253,59 @@ class articlesControl {
                 status: 0
             })
         }
+    }
+
+    //文章收藏===================================================================================
+    async collection(req: any, res: any) {
+        const collectionUserAccount = req.query.account //获取收藏人的账号
+        const collectionArticleId = req.query.articleId //获取被收藏的文章id
+        //把收藏人的账号放在文章的collections键里面，用数组存放。如果不存在就存进去，如果存在就删除掉
+        const article = await Articles.find({ id: collectionArticleId })  //拿到要收藏的文章
+        const ifCollection = article[0].collections.indexOf(collectionUserAccount)  //检查是否已经收藏了
+        if (ifCollection !== -1) {
+            //收藏过了就删除
+            await Articles.updateOne({ id: collectionArticleId }, { $pull: { collections: collectionUserAccount } })  //删除文章收藏数组中的对应账号
+            await Users.updateOne({ account: collectionUserAccount }, { $pull: { collectionArticles: collectionArticleId } })  //删除用户账号数据里面的收藏文章列表对应的文章id
+            res.send({
+                status: 1,
+            })
+        } else {
+            //没收藏就添加
+            await Articles.updateOne({ id: collectionArticleId }, { $push: { collections: collectionUserAccount } })  //添加文章收藏数组中的对应账号
+            await Users.updateOne({ account: collectionUserAccount }, { $push: { collectionArticles: collectionArticleId } })  //添加用户账号数据里面的收藏文章列表对应的文章id
+            res.send({
+                status: 0,
+            })
+        }
+    }
+
+    //查询是否已经收藏了===================================================================================
+    async ifCollection(req: any, res: any) {
+        const collectionUserAccount = req.query.account //获取要查询的人的账号
+        const collectionArticleId = req.query.articleId //获取要查询的文章id
+        const article = await Articles.find({ id: collectionArticleId })
+        const ifHave = article[0].collections.indexOf(collectionUserAccount)
+        if (ifHave !== -1) {
+            //已经收藏了
+            res.send({
+                status: 1
+            })
+        } else {
+            //没收藏
+            res.send({
+                status: 0
+            })
+        }
+    }
+
+    //查询发布了哪些文章===================================================================================
+    async pushArticleNum(req: any, res: any) {
+        const user = req.query.account
+        const list = await Articles.find({ author: user })
+        res.send({
+            status: 0,
+            data: list
+        })
     }
 }
 

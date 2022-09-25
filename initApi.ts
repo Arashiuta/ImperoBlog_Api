@@ -55,6 +55,12 @@ import getIdMessage from './router/getIdMessage'
 import pariseArticle from './router/pariseArticle'
 //查询是否已经点过赞
 import ifParise from "./router/ifParise";
+//文章收藏
+import collectionArticle from './router/collectionArticle'
+//查询文章是否已经收藏
+import ifCollection from './router/ifCollection'
+//查询发布的文章列表
+import pushArticleNum from './router/pushArticleNum'
 
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
@@ -81,6 +87,9 @@ app.use('/api', delMessage)
 app.use('/api', getIdMessage)
 app.use('/api', pariseArticle)
 app.use('/api', ifParise)
+app.use('/api', collectionArticle)
+app.use('/api', ifCollection)
+app.use('/api', pushArticleNum)
 
 
 httpSever.listen(3030, () => {
