@@ -127,9 +127,6 @@ class articlesControl {
             coverPath = tempCoverPath
         }
 
-        console.log(tempCoverPath);
-
-
         //拿到md文档上传的图片的名字
         const mdImg = JSON.parse(readFileSync(path.join(__dirname, '../data/tempMdImg.json'), 'utf-8'))
 

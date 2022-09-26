@@ -70,6 +70,10 @@ class userControl {
                     status: 0,  //登录成功
                     data: userInfo  //把用户信息返回去
                 })
+            } else {
+                res.send({
+                    status: 1  //密码错误
+                })
             }
         } else {
             res.send({
@@ -137,6 +141,16 @@ class userControl {
         const headJson = JSON.parse(readFileSync(path.join(__dirname, '../data/tempHeadImg.json'), 'utf-8'))
         await Users.updateOne({ account: account }, { $set: { headImg: headJson.path, headImgName: headJson.name } })
         writeFileSync(path.join(__dirname, '../data/tempHeadImg.json'), JSON.stringify(null))
+        res.send({
+            status: 0
+        })
+    }
+
+    //修改密码=====================================================================================================================
+    async changePassword(req: any, res: any) {
+        const account = req.query.account
+        const newPassword = req.query.newPassword
+        await Users.updateOne({ account: account }, { $set: { password: newPassword } })
         res.send({
             status: 0
         })

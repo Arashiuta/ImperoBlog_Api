@@ -61,6 +61,8 @@ import collectionArticle from './router/collectionArticle'
 import ifCollection from './router/ifCollection'
 //查询发布的文章列表
 import pushArticleNum from './router/pushArticleNum'
+//修改密码
+import changePassword from './router/changePassword'
 
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
@@ -90,6 +92,7 @@ app.use('/api', ifParise)
 app.use('/api', collectionArticle)
 app.use('/api', ifCollection)
 app.use('/api', pushArticleNum)
+app.use('/api', changePassword)
 
 
 httpSever.listen(3030, () => {
