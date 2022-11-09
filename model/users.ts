@@ -20,10 +20,10 @@ const Users = db.model('users', {
     headImg: {
         type: String,
         require: false
-    }, personalCover: {
+    }, personalCover: {  //个人主页的封面
         type: String,
         require: false
-    }, createDate: {
+    }, createDate: {  //创建时间
         type: String,
         require: true
     },
@@ -43,6 +43,22 @@ const Users = db.model('users', {
     }, mypush: {  //我的发布
         type: Array<string>,
         require: true
+    },
+    sex: {  //性别
+        type: String,
+        require: false
+    },
+    eMail: {  //邮箱
+        type: String,
+        require: false
+    },
+    introduce: {  //个人签名
+        type: String,
+        require: false
+    },
+    personalWeb: {  //个人网站
+        type: String,
+        require: false
     }
 })
 

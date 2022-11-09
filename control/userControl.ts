@@ -29,7 +29,8 @@ class userControl {
                 headImg: '/headimage/defaultHead/defaulthead.PNG',
                 personalCover: '/personalImg/default/P)3T9@S7VH]V`QRNX[G`YRD.webp',
                 createDate: createDate,
-                root: false
+                root: false,
+                sex: "保密"
             }
 
             await Users.create(newUser)
@@ -151,6 +152,18 @@ class userControl {
         const account = req.query.account
         const newPassword = req.query.newPassword
         await Users.updateOne({ account: account }, { $set: { password: newPassword } })
+        res.send({
+            status: 0
+        })
+    }
+
+    //修改个人资料=====================================================================================================================
+    async changePersonalIntroduce(req: any, res: any) {
+        // console.log(req.query);
+        const account = req.query.account
+        const introduce = JSON.parse(req.query.data)
+        await Users.updateOne({ account: account }, { $set: { nickName: introduce.nickName, sex: introduce.sex, eMail: introduce.eMail, personalWeb: introduce.personalWeb } })
+
         res.send({
             status: 0
         })

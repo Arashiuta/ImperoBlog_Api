@@ -14,7 +14,7 @@ class articlesControl {
 
         // const list = await Articles.find()
         // list.map(async (item: any) => {
-        //     await Users.updateOne({ id: item.id }, { $set: { parise: [], collections: [] } })
+        //     await Users.updateOne({ id: item.id }, { $set: { sex: "保密" } })
         // })
 
         res.send({
