@@ -65,6 +65,8 @@ import pushArticleNum from './router/pushArticleNum'
 import changePassword from './router/changePassword'
 //修改个人资料
 import changePersonalIntroduce from "./router/changePersonalIntroduce";
+//关注用户
+import focusUser from "./router/focusUser";
 
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
@@ -96,6 +98,7 @@ app.use('/api', ifCollection)
 app.use('/api', pushArticleNum)
 app.use('/api', changePassword)
 app.use('/api', changePersonalIntroduce)
+app.use('/api', focusUser)
 
 
 httpSever.listen(3030, () => {

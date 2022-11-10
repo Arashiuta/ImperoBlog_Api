@@ -168,6 +168,30 @@ class userControl {
             status: 0
         })
     }
+
+
+    //点击关注=====================================================================================================================
+    async focusUser(req: any, res: any) {
+        const info = req.query
+        if (info.ifFocus === 'false') {
+            //还没关注，添加关注
+            await Users.updateOne({ account: info.account }, { $addToSet: { focus: info.focus } })
+            //给被关注的人粉丝 + 1
+            await Users.updateOne({ account: info.focus }, { $addToSet: { whoFocusMe: info.account } })
+            res.send({
+                status: 0
+            })
+
+        } else {
+            //已经关注了，取消关注
+            await Users.updateOne({ account: info.account }, { $pull: { focus: info.focus } })
+            //给被关注的人粉丝 - 1
+            await Users.updateOne({ account: info.focus }, { $pull: { whoFocusMe: info.account } })
+            res.send({
+                status: 1
+            })
+        }
+    }
 }
 
 export default new userControl()

@@ -59,6 +59,14 @@ const Users = db.model('users', {
     personalWeb: {  //个人网站
         type: String,
         require: false
+    },
+    focus: {  //关注列表
+        type: Array<string>,
+        require: false
+    },
+    whoFocusMe: {  //我的粉丝
+        type: Array<string>,
+        require: false
     }
 })
 
