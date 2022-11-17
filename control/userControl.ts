@@ -91,7 +91,7 @@ class userControl {
 
         // const list = await Users.find()
         // list.map(async (item: any) => {
-        //     await Users.updateOne({ id: item.id }, { $set: { pariseArticles: [], collectionArticles: [] } })
+        //     await Users.updateOne({ id: item.id }, { $rename: { whoFocusMe: "fans" } })
         // })
 
         res.send({
@@ -162,7 +162,7 @@ class userControl {
         // console.log(req.query);
         const account = req.query.account
         const introduce = JSON.parse(req.query.data)
-        await Users.updateOne({ account: account }, { $set: { nickName: introduce.nickName, sex: introduce.sex, eMail: introduce.eMail, personalWeb: introduce.personalWeb } })
+        await Users.updateOne({ account: account }, { $set: { nickName: introduce.nickName, sex: introduce.sex, eMail: introduce.eMail, personalWeb: introduce.personalWeb, introduce: introduce.introduce } })
 
         res.send({
             status: 0
@@ -177,7 +177,7 @@ class userControl {
             //还没关注，添加关注
             await Users.updateOne({ account: info.account }, { $addToSet: { focus: info.focus } })
             //给被关注的人粉丝 + 1
-            await Users.updateOne({ account: info.focus }, { $addToSet: { whoFocusMe: info.account } })
+            await Users.updateOne({ account: info.focus }, { $addToSet: { fans: info.account } })
             res.send({
                 status: 0
             })
@@ -186,7 +186,7 @@ class userControl {
             //已经关注了，取消关注
             await Users.updateOne({ account: info.account }, { $pull: { focus: info.focus } })
             //给被关注的人粉丝 - 1
-            await Users.updateOne({ account: info.focus }, { $pull: { whoFocusMe: info.account } })
+            await Users.updateOne({ account: info.focus }, { $pull: { fans: info.account } })
             res.send({
                 status: 1
             })

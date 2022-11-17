@@ -64,7 +64,7 @@ const Users = db.model('users', {
         type: Array<string>,
         require: false
     },
-    whoFocusMe: {  //我的粉丝
+    fans: {  //我的粉丝
         type: Array<string>,
         require: false
     }
