@@ -147,7 +147,6 @@ class articlesControl {
         await Articles.create(newArticle)
         //更新标签集合
 
-
         data.articleTags.map(async (item: any) => {
             const ifHave = await Tags.find({ content: item })
             if (ifHave.length === 0) {
@@ -302,6 +301,26 @@ class articlesControl {
         res.send({
             status: 0,
             data: list
+        })
+    }
+
+    //发布文章的评论===========================================================================================
+    async addComment(req: any, res: any) {
+        const query = req.query
+        const articleId = Number(query.articleId)
+        //生成发表评论的时间
+        moment.locale()
+        const commentTime = moment().format('YYYY-MM-DD hh:mm:ss')
+        const commentList = await Articles.find({ id: articleId })  //评论数组列表
+        let nextCommentId = 0   //初始id：0
+        if (commentList[0].comments[0]) {
+            nextCommentId = commentList[0].comments.reverse()[0].id + 1  //倒过来评论数组，取第一个的id + 1 就是接下来要用的id
+            await Articles.updateOne({ id: articleId }, { $push: { comments: { id: nextCommentId, account: query.account, content: query.content, time: commentTime } } })
+        } else {  //如果没有comments就直接添加id：0的评论
+            await Articles.updateOne({ id: articleId }, { $push: { comments: { id: nextCommentId, account: query.account, content: query.content, time: commentTime } } })
+        }
+        res.send({
+            status: 0
         })
     }
 }

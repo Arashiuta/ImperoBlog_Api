@@ -1,5 +1,12 @@
 import db from "../connection/db";
 
+type Comment = {
+    id: number,
+    account: string,
+    time: string,
+    content: string
+}
+
 const Articles = db.model('articles', {
     id: {
         type: Number,
@@ -41,9 +48,12 @@ const Articles = db.model('articles', {
     }, oneSentence: {
         type: String,
         required: true
-    }, content: {
+    }, content: {   //内容
         type: String,
         required: true
+    }, comments: {  //评论
+        type: Array<Comment>,
+        required: false
     }
 })
 
