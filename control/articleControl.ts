@@ -323,6 +323,20 @@ class articlesControl {
             status: 0
         })
     }
+
+    //删除文章的评论===========================================================================================
+    async delComment(req: any, res: any) {
+        const delArticleId = req.query.articleId
+        const delCoemmentId = req.query.commentId
+        const delArticleItem = await Articles.find({ id: delArticleId })  //找到要删除的评论对应的文章
+        const delCommentItem = delArticleItem[0].comments.filter((item: any) => {   //删选出要删除的评论对象
+            return item.id === Number(delCoemmentId)
+        })
+        await Articles.updateOne({ id: delArticleId }, { $pull: { comments: delCommentItem[0] } })  //删除对应的评论
+        res.send({
+            status: 0
+        })
+    }
 }
 
 export default new articlesControl
