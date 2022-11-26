@@ -337,6 +337,53 @@ class articlesControl {
             status: 0
         })
     }
+
+    //回复评论===============================================================================================
+    async replyComment(req: any, res: any) {
+        const query = JSON.parse(req.query.data)
+        // console.log(query);
+        const article = await Articles.find({ id: query.articleId })  //找到相应的文章
+        const comment = article[0].comments.filter((item: any) => {   //筛选出相应的评论
+            return item.id === query.commentId
+        })
+        if (comment[0].reply) {    //已经有回复了
+            const nextReplyId = comment[0].reply.reverse()[0].id + 1
+            //生成一个回复时间
+            moment.locale()
+            const replyTime = moment().format('YYYY-MM-DD hh:mm:ss')
+            //生成回复的插入对象
+            const replyComment = {
+                id: nextReplyId,  //id
+                replyTo: query.replyAccount, //回复的谁
+                account: query.account,  //谁写的回复
+                content: query.replyContent,  //回复的内容
+                time: replyTime,  //回复的时间
+            }
+            //更新数据库
+            await Articles.updateOne({ id: query.articleId, 'comments.id': query.commentId }, { $push: { 'comments.$.reply': replyComment } })
+            res.send({
+                status: 0
+            })
+        } else {  //如果没有回复
+            const replyId = 0   //第一条回复，id为0
+            //生成一个回复时间
+            moment.locale()
+            const replyTime = moment().format('YYYY-MM-DD hh:mm:ss')
+            //生成回复的插入对象
+            const replyComment = {
+                id: replyId,  //id
+                replyTo: query.replyAccount, //回复的谁
+                account: query.account,  //谁写的回复
+                content: query.replyContent,  //回复的内容
+                time: replyTime,  //回复的时间
+            }
+            //更新数据库
+            await Articles.updateOne({ id: query.articleId, 'comments.id': query.commentId }, { $push: { 'comments.$.reply': replyComment } })
+            res.send({
+                status: 0
+            })
+        }
+    }
 }
 
 export default new articlesControl
