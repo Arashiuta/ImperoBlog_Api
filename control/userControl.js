@@ -62,7 +62,9 @@ class userControl {
     //登录============================================================================================================
     async login(req, res) {
         const loginInfo = req.body
+        console.log(req.body);
         const ifHaveAccount = await Users.find({ account: loginInfo.username })
+        console.log(ifHaveAccount);
         const userInfo = ifHaveAccount[0]
         if (ifHaveAccount.length !== 0) {
             //用户存在
@@ -106,7 +108,7 @@ class userControl {
     async uploadHeadImg(req, res) {
         // 接收发送过来的头像图片
         const form = formidable({
-            uploadDir: path.join(__dirname, '../image/headimage/'),
+            uploadDir: path.join(__dirname, '/image/headimage/'),
             keepExtensions: true
         })
         form.parse(req, (err, fields, files) => {
@@ -118,7 +120,7 @@ class userControl {
                 name: filesInfo.file.newFilename
             }
             //记录图片的地址
-            writeFileSync(path.join(__dirname, '../data/tempHeadImg.json'), JSON.stringify(filePath))
+            writeFileSync(path.join(__dirname, '/data/tempHeadImg.json'), JSON.stringify(filePath))
         });
 
         res.send({
@@ -132,16 +134,16 @@ class userControl {
         //读出图片的地址并给相应的用户更改头像
         //改前要先把原头像删除
         const userHeadInfo = await Users.find({ account: account })  //获取用户信息
-        const headDir = readdirSync(path.join(__dirname, '../image/headimage'))
+        const headDir = readdirSync(path.join(__dirname, '/image/headimage'))
 
         //如果存在原头像，就删除
         if (headDir.indexOf(userHeadInfo[0].headImgName) !== -1) {
-            unlinkSync(path.join(__dirname, '../image/headimage/' + userHeadInfo[0].headImgName))
+            unlinkSync(path.join(__dirname, '/image/headimage/' + userHeadInfo[0].headImgName))
         }
         //更换新地址
-        const headJson = JSON.parse(readFileSync(path.join(__dirname, '../data/tempHeadImg.json'), 'utf-8'))
+        const headJson = JSON.parse(readFileSync(path.join(__dirname, '/data/tempHeadImg.json'), 'utf-8'))
         await Users.updateOne({ account: account }, { $set: { headImg: headJson.path, headImgName: headJson.name } })
-        writeFileSync(path.join(__dirname, '../data/tempHeadImg.json'), JSON.stringify(null))
+        writeFileSync(path.join(__dirname, '/data/tempHeadImg.json'), JSON.stringify(null))
         res.send({
             status: 0
         })

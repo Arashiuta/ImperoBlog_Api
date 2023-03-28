@@ -4,11 +4,12 @@ import http from 'http'
 import cors from "cors";
 import fs from "fs";
 import path from "path";
+const __dirname = path.resolve()
 
 const app = express()
 const sslOptions = {
-    key: fs.readFileSync(path.join('./ssl/impero.top.key'), 'utf-8'),
-    cert: fs.readFileSync(path.join('./ssl//impero.top_bundle.pem'), 'utf-8')
+    key: fs.readFileSync(path.join(__dirname,'/ssl/impero.top.key'), 'utf-8'),
+    cert: fs.readFileSync(path.join(__dirname,'/ssl//impero.top_bundle.pem'), 'utf-8')
 }
 const httpSever = http.createServer(app)
 const httpsSever = https.createServer(sslOptions, app)

@@ -5,6 +5,7 @@ import moment from "moment";
 import fs, { readFileSync, writeFileSync } from "fs";
 import path from 'path'
 import formidable from 'formidable';
+const __dirname = path.resolve()
 
 
 class articlesControl {
@@ -52,7 +53,7 @@ class articlesControl {
     async uploadArticleCover(req, res) {
         // 接收发送过来的封面图片
         const form = formidable({
-            uploadDir: path.join(__dirname, '../image/articleImage/coverImage'),
+            uploadDir: path.join(__dirname, '/image/articleImage/coverImage'),
             keepExtensions: true
         })
 
@@ -64,7 +65,7 @@ class articlesControl {
                 path: '/articleImage/coverImage/' + filesInfo.file.newFilename,
                 name: filesInfo.file.newFilename
             }
-            writeFileSync(path.join(__dirname, '../data/tempArticleCoverDir.json'), JSON.stringify(filePath))
+            writeFileSync(path.join(__dirname, '/data/tempArticleCoverDir.json'), JSON.stringify(filePath))
             res.send({
                 status: 0
             })
@@ -78,14 +79,14 @@ class articlesControl {
         const nextIdNum = reverseList[0].id + 1  //拿到即将上传的文章的id
         const nextId = nextIdNum.toString()
         //检查即将上传的文章的id对应的目录或文件是否存在
-        if (!fs.existsSync(path.join(__dirname, '../image/articleImage/mdImg/', nextId))) {
+        if (!fs.existsSync(path.join(__dirname, '/image/articleImage/mdImg/', nextId))) {
             //如果不存在目录，则创建
-            fs.mkdirSync(path.join(__dirname, '../image/articleImage/mdImg/', nextId))
+            fs.mkdirSync(path.join(__dirname,'/image/articleImage/mdImg/', nextId))
         }
 
         // 接收发送过来的封面图片
         const form = formidable({
-            uploadDir: path.join(__dirname, '../image/articleImage/mdImg/', nextId),
+            uploadDir: path.join(__dirname, '/image/articleImage/mdImg/', nextId),
             keepExtensions: true
         })
 
@@ -98,7 +99,7 @@ class articlesControl {
                 path: '/articleImage/mdImg/' + nextId + '/' + filesInfo.file.newFilename,
                 name: filesInfo.file.newFilename
             }
-            writeFileSync(path.join(__dirname, '../data/tempMdImg.json'), JSON.stringify(filePath))
+            writeFileSync(path.join(__dirname, '/data/tempMdImg.json'), JSON.stringify(filePath))
             res.send({
                 status: 0,
                 url: filePath.path
@@ -118,7 +119,7 @@ class articlesControl {
         moment.locale()
         const uploadTime = moment().format('YYYY-MM-DD hh:mm:ss')
         //拿到上传的封面目录
-        const tempCoverPath = JSON.parse(readFileSync(path.join(__dirname, '../data/tempArticleCoverDir.json'), 'utf-8'))
+        const tempCoverPath = JSON.parse(readFileSync(path.join(__dirname, '/data/tempArticleCoverDir.json'), 'utf-8'))
         let coverPath = {
             path: '',
             name: '',
@@ -128,7 +129,7 @@ class articlesControl {
         }
 
         //拿到md文档上传的图片的名字
-        const mdImg = JSON.parse(readFileSync(path.join(__dirname, '../data/tempMdImg.json'), 'utf-8'))
+        const mdImg = JSON.parse(readFileSync(path.join(__dirname, '/data/tempMdImg.json'), 'utf-8'))
 
         const newArticle = {  //新文章!
             id: nextIdNum,
@@ -162,7 +163,7 @@ class articlesControl {
         })
 
         //把临时文章目录清空
-        writeFileSync(path.join(__dirname, '../data/tempArticleCoverDir.json'), 'null')
+        writeFileSync(path.join(__dirname, '/data/tempArticleCoverDir.json'), 'null')
 
         res.send({
             status: 0
@@ -179,23 +180,23 @@ class articlesControl {
 
         const delCoverName = delArticle[0].coverName  //要删除的封面的名字
         //封面目录文件名的数组
-        const coverNameList = fs.readdirSync(path.join(__dirname, '../image/articleImage/coverImage'))
+        const coverNameList = fs.readdirSync(path.join(__dirname, '/image/articleImage/coverImage'))
         //如果存在相应的封面就删除
         if (coverNameList.indexOf(delCoverName) !== -1) {
-            fs.unlinkSync(path.join(__dirname, '../image/articleImage/coverImage/', delCoverName))
+            fs.unlinkSync(path.join(__dirname, '/image/articleImage/coverImage/', delCoverName))
         }
         //删除对应id文件夹里面的md图片
-        if (fs.existsSync(path.join(__dirname, '../image/articleImage/mdImg/', delId))) {
-            while (fs.readdirSync(path.join(__dirname, '../image/articleImage/mdImg/', delId))) {
-                const delName = fs.readdirSync(path.join(__dirname, '../image/articleImage/mdImg/', delId))[0]
+        if (fs.existsSync(path.join(__dirname, '/image/articleImage/mdImg/', delId))) {
+            while (fs.readdirSync(path.join(__dirname, '/image/articleImage/mdImg/', delId))) {
+                const delName = fs.readdirSync(path.join(__dirname, '/image/articleImage/mdImg/', delId))[0]
                 if (delName) {
-                    fs.unlinkSync(path.join(__dirname, '../image/articleImage/mdImg/', delId, delName))
+                    fs.unlinkSync(path.join(__dirname, '/image/articleImage/mdImg/', delId, delName))
                 } else {
                     break
                 }
             }
             //删完里面的图片删除相应的文件夹
-            fs.rmdirSync(path.join(__dirname, '../image/articleImage/mdImg/', delId))
+            fs.rmdirSync(path.join(__dirname, '/image/articleImage/mdImg/', delId))
         }
 
         //删除数据库里面的文章信息
