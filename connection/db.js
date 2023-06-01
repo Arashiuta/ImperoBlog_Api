@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 const dbArticle = mongoose.createConnection(
 <<<<<<< HEAD
     // 'mongodb://127.0.0.1:27017/blog',
-    'mongodb://root:admin123@101.43.176.92:27017/?directConnection=true&authMechanism=DEFAULT&authSource=admin',
 =======
     'mongodb://127.0.0.1:27017/blog,
 >>>>>>> 7ff3275cfb673a72649310dabb3718a068a0b6db
