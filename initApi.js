@@ -13,7 +13,6 @@ const sslOptions = {
 }
 const httpSever = http.createServer(app)
 const httpsSever = https.createServer(sslOptions, app)
-
 //请求文章列表
 import getArticles from './router/getArticles.js'
 //请求指定id的文章
@@ -74,6 +73,10 @@ import addComment from "./router/addComment.js";
 import delComment from "./router/delComment.js";
 //回复评论
 import replyComment from "./router/replyComment.js";
+//置顶文章
+import topArticle from "./router/topArticle.js"
+//请求置顶文章id
+import getTopArticle from "./router/getTopArticle.js";
 
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
@@ -109,13 +112,15 @@ app.use('/api', focusUser)
 app.use('/api', addComment)
 app.use('/api', delComment)
 app.use('/api', replyComment)
+app.use('/api', topArticle)
+app.use('/api', getTopArticle)
 
 
 httpSever.listen(3030, () => {
-    console.log('http success');
+    console.log('http success')
 
 })
 
 httpsSever.listen(3031, () => {
-    console.log('https success');
+    console.log('https success')
 })

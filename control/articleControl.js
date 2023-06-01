@@ -1,6 +1,7 @@
 import Articles from "../model/articles.js";
 import Users from '../model/users.js'
 import Tags from '../model/tags.js'
+import TopArticle from "../model/topArticle.js";
 import moment from "moment";
 import fs, { readFileSync, writeFileSync } from "fs";
 import path from 'path'
@@ -384,6 +385,26 @@ class articlesControl {
                 status: 0
             })
         }
+    }
+
+    //置顶文章==========================================================================
+    async topArticle(req,res) {
+        let id = req.query.id
+        await TopArticle.updateOne({ id: 0 }, { $set: { topArticleIdNum: id } })
+        res.send({
+            status: 0
+        })
+    }
+
+    //请求置顶文章====================================================================================
+    async getTopArticle(req, res) {
+        let topArticleIdDB = await TopArticle.find({ id: 0 })
+        let topArticleId = topArticleIdDB[0].topArticleIdNum
+        let topArticleInfo = await Articles.find({id:topArticleId})
+        res.send({
+            status: 0,
+            info:topArticleInfo
+        })
     }
 }
 
