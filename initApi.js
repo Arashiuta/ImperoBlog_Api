@@ -13,6 +13,11 @@ const sslOptions = {
 }
 const httpSever = http.createServer(app)
 const httpsSever = https.createServer(sslOptions, app)
+
+//api列表
+import apiRoutes from './router/apiRoutes.js'
+
+/*
 //请求文章列表
 import getArticles from './router/getArticles.js'
 //请求指定id的文章
@@ -77,11 +82,15 @@ import replyComment from "./router/replyComment.js";
 import topArticle from "./router/topArticle.js"
 //请求置顶文章id
 import getTopArticle from "./router/getTopArticle.js";
+*/
 
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 //托管静态资源
 app.use(express.static('./image'))
+app.use('/api',apiRoutes)
+
+/*
 app.use('/api', getArticles)
 app.use('/api', getTags)
 app.use('/api', uploadArticle)
@@ -114,6 +123,7 @@ app.use('/api', delComment)
 app.use('/api', replyComment)
 app.use('/api', topArticle)
 app.use('/api', getTopArticle)
+*/
 
 
 httpSever.listen(3030, () => {

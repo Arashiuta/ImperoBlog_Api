@@ -3,11 +3,7 @@ import mongoose from "mongoose";
 
 //链接数据库
 const dbArticle = mongoose.createConnection(
-<<<<<<< HEAD
-    // 'mongodb://127.0.0.1:27017/blog',
-=======
-    'mongodb://127.0.0.1:27017/blog,
->>>>>>> 7ff3275cfb673a72649310dabb3718a068a0b6db
+    'mongodb://127.0.0.1:27017/blog',
     err => {
         if (err) {
             return console.log('文章数据库连接失败' + err);
