@@ -2,6 +2,7 @@ import express from 'express'
 import articleControl from "../control/articleControl.js";
 import userControl from '../control/userControl.js';
 import messageControl from "../control/messageControl.js";
+import searchControl from '../control/searchControl.js';
 import tagsControl from "../control/tagsControl.js";
 import { readdirSync } from 'fs'
 const apiRouter = express.Router()
@@ -37,6 +38,8 @@ apiRouter.post('/register', userControl.register)  //注册
 apiRouter.get('/updatanicknane', userControl.updataNickname) //更新昵称
 apiRouter.post('/uploadhead', userControl.uploadHeadImg) //更换头像1
 apiRouter.get('/uploadheadjson', userControl.uploadHeadjson)  //更换头像2
+apiRouter.get('/searcharticle', searchControl.searchArticle)  //搜索文章
+apiRouter.get('/searchuser', searchControl.searchUser)  //搜索用户
 apiRouter.get('/getcover', (req, res) => {
     const coverList = readdirSync('./image/indexCover')
     //生成一个随机数,随机选一个做封面

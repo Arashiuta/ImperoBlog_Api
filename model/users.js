@@ -67,6 +67,10 @@ const Users = db.model('users', {
     fans: {  //我的粉丝
         type: Array,
         require: false
+    },
+    pushArticleNum: { //发布文章数量
+        type: String,
+        require:false
     }
 })
 

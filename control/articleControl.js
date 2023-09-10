@@ -15,7 +15,7 @@ class articlesControl {
         const all = await Articles.find()
 
         // const list = await Articles.find()
-        // list.map(async (item: any) => {
+        // list.map(async (item) => {
         //     await Users.updateOne({ id: item.id }, { $set: { sex: "保密" } })
         // })
 
@@ -388,7 +388,7 @@ class articlesControl {
     }
 
     //置顶文章==========================================================================
-    async topArticle(req,res) {
+    async topArticle(req, res) {
         let id = req.query.id
         await TopArticle.updateOne({ id: 0 }, { $set: { topArticleIdNum: id } })
         res.send({
@@ -399,7 +399,7 @@ class articlesControl {
     //请求置顶文章====================================================================================
     async getTopArticle(req, res) {
         let topArticleIdDB = await TopArticle.find({ id: 0 })
-        let topArticleId = topArticleIdDB[0].topArticleIdNum
+        let topArticleId = topArticleIdDB[0]?.topArticleIdNum
         let topArticleInfo = await Articles.find({id:topArticleId})
         res.send({
             status: 0,

@@ -3,6 +3,7 @@ import formidable from 'formidable';
 import fs, { readdirSync, readFileSync, unlinkSync, writeFileSync } from "fs";
 import path from 'path'
 import moment from "moment";
+import Articles from "../model/articles.js";
 
 
 class userControl {
@@ -62,9 +63,9 @@ class userControl {
     //登录============================================================================================================
     async login(req, res) {
         const loginInfo = req.body
-        console.log(req.body);
+        // console.log(req.body);
         const ifHaveAccount = await Users.find({ account: loginInfo.username })
-        console.log(ifHaveAccount);
+        // console.log(ifHaveAccount);
         const userInfo = ifHaveAccount[0]
         if (ifHaveAccount.length !== 0) {
             //用户存在
@@ -91,9 +92,11 @@ class userControl {
         const info = await Users.find({ account: account })
 
 
-        // const list = await Users.find()
-        // list.map(async (item: any) => {
-        //     await Users.updateOne({ id: item.id }, { $rename: { whoFocusMe: "fans" } })
+        // const list = await Users.find()    //增加“发布文章数量的属性”
+        // list.map(async (item) => {
+        //     const list = await Articles.find({ author: item.account })
+        //     console.log(list.length);
+        //     await Users.updateOne({ id: item.id }, { $set: {pushArticleNum:list.length} })
         // })
 
         res.send({
