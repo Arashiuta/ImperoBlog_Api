@@ -147,8 +147,11 @@ class articlesControl {
         }
 
         await Articles.create(newArticle)
+        //发布文章数+1
+        const pushUser = await Users.find({ account: newArticle.author })  //找到要更新的人的信息
+        await Users.updateOne({account: newArticle.author},{$set:{pushArticleNum:Number(pushUser[0].pushArticleNum) + 1}})  //更新
+        // await Users.find()
         //更新标签集合
-
         data.articleTags.map(async (item) => {
             const ifHave = await Tags.find({ content: item })
             if (ifHave.length === 0) {
@@ -202,6 +205,12 @@ class articlesControl {
 
         //删除数据库里面的文章信息
         await Articles.deleteOne({ id: delId })
+
+        console.log(delArticle[0].author);
+
+        //  //发布文章数-1
+        const pushUser = await Users.find({ account: delArticle[0].author })  //找到要更新的人的信息
+        await Users.updateOne({account: delArticle[0].author},{$set:{pushArticleNum:Number(pushUser[0].pushArticleNum) - 1}})  //更新
 
         res.send({
             status: 0
