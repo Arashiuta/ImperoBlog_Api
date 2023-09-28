@@ -4,15 +4,17 @@ import http from 'http'
 import cors from "cors";
 import fs from "fs";
 import path from "path";
+import { socketFunc } from './socket/chatServer.js';
 const __dirname = path.resolve()
-
 const app = express()
 const sslOptions = {
     key: fs.readFileSync(path.join(__dirname,'/ssl/impero.top.key'), 'utf-8'),
     cert: fs.readFileSync(path.join(__dirname,'/ssl//impero.top_bundle.pem'), 'utf-8')
 }
-const httpSever = http.createServer(app)
-const httpsSever = https.createServer(sslOptions, app)
+const httpServer = http.createServer(app)
+const httpsServer = https.createServer(sslOptions, app)
+
+socketFunc(httpServer) //socket函数
 
 //api列表
 import apiRoutes from './router/apiRoutes.js'
@@ -84,10 +86,9 @@ import topArticle from "./router/topArticle.js"
 import getTopArticle from "./router/getTopArticle.js";
 */
 
-app.use(cors())
+app.use(cors()) //跨域
 app.use(express.urlencoded({ extended: true }))
-//托管静态资源
-app.use(express.static('./image'))
+app.use(express.static('./image'))  //托管静态资源
 app.use('/api',apiRoutes)
 
 /*
@@ -126,11 +127,11 @@ app.use('/api', getTopArticle)
 */
 
 
-httpSever.listen(3030, () => {
+httpServer.listen(3030, () => {
     console.log('http success')
 
 })
 
-httpsSever.listen(3031, () => {
+httpsServer.listen(3031, () => {
     console.log('https success')
 })
