@@ -113,8 +113,8 @@ class chatLog {
                 data:chatLog
             })
         }
-        
     }
+
 }
 
 export default new chatLog

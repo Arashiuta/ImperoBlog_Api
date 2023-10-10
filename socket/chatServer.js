@@ -17,7 +17,7 @@ export function socketFunc(httpServer) {
     //创建socket服务器连接
     const io = new Server(httpServer, {
         cors: {
-            origin:"http://localhost:5173",
+            origin:["http://localhost:5173","https://www.impero.top","https://impero.top"],
         }
     })
 
