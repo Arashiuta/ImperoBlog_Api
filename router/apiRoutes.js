@@ -5,6 +5,7 @@ import messageControl from "../control/messageControl.js";
 import searchControl from '../control/searchControl.js';
 import tagsControl from "../control/tagsControl.js";
 import { readdirSync } from 'fs'
+import chatControl from '../control/chatControl.js';
 const apiRouter = express.Router()
 
 apiRouter.get('/articleaddcomment', articleControl.addComment)  //发布文章评论
@@ -40,6 +41,11 @@ apiRouter.post('/uploadhead', userControl.uploadHeadImg) //更换头像1
 apiRouter.get('/uploadheadjson', userControl.uploadHeadjson)  //更换头像2
 apiRouter.get('/searcharticle', searchControl.searchArticle)  //搜索文章
 apiRouter.get('/searchuser', searchControl.searchUser)  //搜索用户
+apiRouter.post('/setnewchatroom',chatControl.newRoom) //聊天室添加新的房间
+apiRouter.get('/getallrooms',chatControl.getAllRooms) //获取聊天室的所有房间
+apiRouter.post('/setnewlog',chatControl.newChatInfo) //添加聊天记录
+apiRouter.get('/getchatlog',chatControl.getChatLog) //获取对应房间的聊天记录
+apiRouter.post('/delroom',chatControl.delRoom) //删除房间
 apiRouter.get('/getcover', (req, res) => {
     const coverList = readdirSync('./image/indexCover')
     //生成一个随机数,随机选一个做封面

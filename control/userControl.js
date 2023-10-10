@@ -91,7 +91,6 @@ class userControl {
         const account = req.query.account
         const info = await Users.find({ account: account })
 
-
         // const list = await Users.find()    //增加“发布文章数量的属性”
         // list.map(async (item) => {
         //     const list = await Articles.find({ author: item.account })
@@ -104,7 +103,6 @@ class userControl {
             data: info
         })
     }
-
 
     //更换头像1=============================================================================================================
     //因为我不会使用element的upload组件传参，所以使用了两个接口，一个存图片，一个改信息

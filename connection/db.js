@@ -5,10 +5,7 @@ import mongoose from "mongoose";
 const dbArticle = mongoose.createConnection(
     'mongodb://127.0.0.1:27017/blog',
     err => {
-        if (err) {
-            return console.log('文章数据库连接失败' + err);
-
-        }
+        if (err) return console.log('文章数据库连接失败' + err);
         console.log('数据库链接成功');
     }
 )
