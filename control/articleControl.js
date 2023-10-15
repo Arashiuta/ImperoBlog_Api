@@ -112,7 +112,7 @@ class articlesControl {
     //上传文章================================================================================================================
     async upload(req, res) {
         const data = req.body.list  //拿到发过来的文章信息
-
+        console.log(data);
         //拿到即将上传的文章的id 
         const reverseList = await Articles.find().sort({ id: -1 })
         const nextIdNum = reverseList[0].id + 1  //拿到即将上传的文章的id
@@ -142,7 +142,6 @@ class articlesControl {
             mdImgName: mdImg.name,
             time: uploadTime,
             lastUpdataTime: uploadTime,
-            oneSentence: data.articleOneSentence,
             content: data.articleText
         }
 

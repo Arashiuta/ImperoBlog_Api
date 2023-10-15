@@ -38,9 +38,9 @@ const Articles = db.model('articles', {
     }, lastUpdataTime: {
         type: String,
         required: true
-    }, oneSentence: {
+    }, oneSentence: {  //引言（已弃用）
         type: String,
-        required: true
+        required: false
     }, content: {   //内容
         type: String,
         required: true
