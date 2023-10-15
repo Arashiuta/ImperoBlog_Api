@@ -4,7 +4,7 @@ import fs, { readdirSync, readFileSync, unlinkSync, writeFileSync } from "fs";
 import path from 'path'
 import moment from "moment";
 import Articles from "../model/articles.js";
-
+const __dirname = path.resolve()
 
 class userControl {
     //注册============================================================================================================
