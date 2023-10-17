@@ -76,10 +76,12 @@ class articlesControl {
     //上传md文档的图片===============================================================================================
     async uploadMdImg(req, res) {
         //拿到即将上传的文章的id    //给每一个文章单独一个文件夹方便删除
-        const reverseList = await Articles.find()
+        const list = await Articles.find()
+        const reverseList = list.reverse()
         const nextIdNum = reverseList[0].id + 1  //拿到即将上传的文章的id
         const nextId = nextIdNum.toString()
         //检查即将上传的文章的id对应的目录或文件是否存在
+        console.log(fs.existsSync(path.join(__dirname, '/image/articleImage/mdImg/', nextId)));
         if (!fs.existsSync(path.join(__dirname, '/image/articleImage/mdImg/', nextId))) {
             //如果不存在目录，则创建
             fs.mkdirSync(path.join(__dirname,'/image/articleImage/mdImg/', nextId))
@@ -204,8 +206,6 @@ class articlesControl {
 
         //删除数据库里面的文章信息
         await Articles.deleteOne({ id: delId })
-
-        console.log(delArticle[0].author);
 
         //  //发布文章数-1
         const pushUser = await Users.find({ account: delArticle[0].author })  //找到要更新的人的信息
